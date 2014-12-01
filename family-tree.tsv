@@ -1,0 +1,174 @@
+# Adopted from the paper:
+# Hinton, G. E. (1986, August). Learning distributed representations of concepts. 
+# In Proceedings of the eighth annual conference of the cognitive science society (Vol. 1, p. 12).
+
+# chr: Christopher
+# pen: Penelope
+# and: Andrew
+# che: Christine
+# mat: Margaret
+# art: Arthur
+# vic: Victoria
+# jam: James
+# jen: Jennifer
+# chs: Charles
+# col: Colin
+# cha: Charlotte
+# rob: Roberto
+# maa: Maria
+# pie: Pierro
+# fra: Francesca
+# gin: Gina
+# emi: Emilio
+# luc: Lucia
+# mar: Marco
+# ang: Angela
+# tom: Tomaso
+# alf: Alfonso
+# sop: Sophia
+
+
+# father
+chr	fa	art
+chr	fa	vic
+and	fa	jam
+and	fa	jen
+jam	fa	col
+jam	fa	cha
+
+rob	fa	emi
+rob	fa	luc
+pie	fa	mar
+pie	fa	ang
+mar	fa	alf
+mar	fa	sop
+
+# mother
+pen	mo	art
+pen	mo	vic
+che	mo	jam
+che	mo	jen
+vic	mo	col
+vic	mo	cha
+
+maa	mo	emi
+maa	mo	luc
+fra	mo	mar
+fra	mo	ang
+luc	mo	alf
+luc	mo	sop
+
+# husband
+chr	hu	pen
+and	hu	che
+art	hu	mat
+jam	hu	vic
+chs	hu	jen
+
+rob	hu	maa
+pie	hu	fra
+emi	hu	gin
+mar	hu	luc
+tom	hu	ang
+
+# wife
+pen	wi	chr
+che	wi	and
+mat	wi	art
+vic	wi	jam
+jen	wi	chs
+
+maa	wi	rob
+fra	wi	pie
+gin	wi	emi
+luc	wi	mar
+ang	wi	tom
+
+# son
+
+art	so	chr
+jam	so	and
+col	so	jam
+emi	so	rob
+mar	so	pie
+alf	so	mar
+
+art	so	pen
+jam	so	che
+col	so	vic
+emi	so	maa
+mar	so	fra
+alf	so	luc
+
+
+# daughter
+vic	da	chr
+jen	da	and
+cha	da	jam
+luc	da	rob
+ang	da	pie
+sop	da	mar
+
+vic	da	pen
+jen	da	che
+cha	da	vic
+luc	da	maa
+ang	da	fra
+sop	da	luc
+
+# uncle
+art	un	col
+art	un	cha
+emi	un	alf
+emi	un	sop
+chs	un	col
+chs	un	cha
+tom	un	alf
+tom	un	sop
+
+# aunt
+ang	au	alf
+ang	au	sop
+gin	au	alf
+gin	au	sop
+jen	au	cha
+jen	au	col
+mat	au	cha
+mat	au	col
+
+# brother
+alf	br	sop
+art	br	vic
+col	br	cha
+emi	br	luc
+jam	br	jen
+mar	br	ang
+
+# sister
+ang	si	mar
+cha	si	col
+jen	si	jam
+luc	si	emi
+sop	si	alf
+vic	si	art
+
+# nephew
+alf	ne	ang
+alf	ne	emi
+alf	ne	gin
+alf	ne	tom
+col	ne	art
+col	ne	chs
+col	ne	jen
+col	ne	mat
+
+
+# neice
+cha	ni	art
+cha	ni	chs
+cha	ni	jen
+cha	ni	mat
+sop	ni	ang
+sop	ni	emi
+sop	ni	gin
+sop	ni	tom
