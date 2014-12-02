@@ -1,7 +1,7 @@
 !obj:pylearn2.train.Train {
     dataset: &train !obj:dataset.KBCDataset {
         which_set: 'train',
-        home_dir: &data_dir '%(data_dir)s',
+        home_dir: &data_dir 'dataset',
         max_labels: &max_labels 40,
     },
     model: !obj:pylearn2.models.mlp.MLP {
@@ -30,22 +30,23 @@
     },
     algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
         train_iteration_mode: 'random_uniform',
-        batches_per_iter: 3,
+        batches_per_iter: 50,
         batch_size: 100,
         # without monitoring_batch_size here, pylearn2 will copy both
         # monitoring_batch_size and monitoring_batches from their training 
         # counterparts which create an error
         monitoring_batch_size: 100, 
-        learning_rate: .1,
-        seed: 20141117,
+        learning_rate: 1.0,
+        # ensure reproducibility
+        seed: 20141202,
         monitoring_dataset: {
             'train' : *train,
-            'valid' : !obj:kbcomplete.dataset.KBCDataset {
+            'valid' : !obj:dataset.KBCDataset {
                 which_set: 'valid',
                 home_dir: *data_dir,
                 max_labels: *max_labels,
             },
-            'test' : !obj:kbcomplete.dataset.KBCDataset {
+            'test' : !obj:dataset.KBCDataset {
                 which_set: 'test',
                 home_dir: *data_dir,
                 max_labels: *max_labels,
@@ -54,16 +55,16 @@
         termination_criterion: !obj:pylearn2.termination_criteria.MonitorBased {
             channel_name: 'valid_objective',
             prop_decrease: 0.001,
-            N: 50, # small epochs permit more waste
+            N: 50,
         },
-#        learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
-#            init_momentum: .5
-#        },
+        learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
+            init_momentum: .5
+        },
         cost: !obj:pylearn2.costs.cost.SumOfCosts {
             costs: [
                 !obj:pylearn2.costs.mlp.Default {},
                 !obj:pylearn2.costs.mlp.WeightDecay {
-                    coeffs: [ .0001, .0001, .0001, ]
+                    coeffs: [ .00001, .00001, .00001, ]
                 }
             ]
         },
@@ -74,7 +75,7 @@
              # because: (i) it is more sensitive and (ii) we care about
              # entity vectors but not classification 
              channel_name: 'valid_y_nll',
-             save_path: '%(output_path)s',
+             save_path: 'model.pkl',
         },
     ],
 }
