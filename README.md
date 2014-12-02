@@ -1,0 +1,1 @@
+Source code for the article: [Knowledge base completion 101](http://minhlab.wordpress.com/2014/12/01/knowledge-base-completion-101/).
