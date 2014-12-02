@@ -1,5 +1,5 @@
 !obj:pylearn2.train.Train {
-    dataset: &train !obj:kbcomplete.dataset.BabelNetDataset {
+    dataset: &train !obj:dataset.KBCDataset {
         which_set: 'train',
         home_dir: &data_dir '%(data_dir)s',
         max_labels: &max_labels 40,
@@ -11,58 +11,17 @@
                 dim: 10,
                 irange: 0.3
             },
-#            !obj:pylearn2.models.mlp.Sigmoid {
-#                layer_name: 'h',
-#                dim: 10,
-#                irange: 0.3,
-#            },
-#            !obj:pylearn2.models.lwta.LWTA {
-#                layer_name: 'h',
-#                dim: 10,
-#                block_size: 2,
-#                irange: 0.3,
-#            },
-            !obj:kbcomplete.models.attractor.Attractor {
-                 block_size: 12,
-                 partition_size: 10, 
-                 init_scaler: 0.2,
-                 layer_name: 'h0',
-                 dim: 480,
-                 irange : 0.05,
-                 #soft: True,
-                 rectified: True,
-             },
-            !obj:kbcomplete.models.attractor.Attractor {
-                 block_size: 12,
-                 partition_size: 10, 
-                 init_scaler: 0.2,
-                 layer_name: 'h1',
-                 dim: 480,
-                 irange : 0.05,
-                 #soft: True,
-                 rectified: True,
-             },
-#            !obj:pylearn2.models.mlp.Sigmoid {
-#                layer_name: 'h1',
-#                dim: 50,
-#                irange: 0.3,
-#            },
-#            !obj:kbcomplete.models.attractor.Attractor {
-#                 block_size: 12,
-#                 partition_size: 10, 
-#                 init_scaler: 0.2,
-#                 layer_name: 'h2',
-#                 dim: 480,
-#                 irange : 0.05,
-#                 #soft: True,
-#                 rectified: True,
-#             },
+            !obj:pylearn2.models.mlp.RectifiedLinear {
+                layer_name: 'h',
+                dim: 10,
+                irange: 0.3,
+            },
             !obj:pylearn2.models.mlp.Softmax {
                 layer_name: 'y',
                 n_classes: 2,
-                irange: 0.3,
+                irange: 0.05,
                 binary_target_dim: 1,
-            }
+            },
         ],
         input_space: !obj:pylearn2.space.IndexSpace {
             dim: 3,
@@ -78,15 +37,15 @@
         # counterparts which create an error
         monitoring_batch_size: 100, 
         learning_rate: .1,
-        #seed: 20141117,
+        seed: 20141117,
         monitoring_dataset: {
             'train' : *train,
-            'valid' : !obj:kbcomplete.dataset.BabelNetDataset {
+            'valid' : !obj:kbcomplete.dataset.KBCDataset {
                 which_set: 'valid',
                 home_dir: *data_dir,
                 max_labels: *max_labels,
             },
-            'test' : !obj:kbcomplete.dataset.BabelNetDataset {
+            'test' : !obj:kbcomplete.dataset.KBCDataset {
                 which_set: 'test',
                 home_dir: *data_dir,
                 max_labels: *max_labels,
@@ -104,10 +63,7 @@
             costs: [
                 !obj:pylearn2.costs.mlp.Default {},
                 !obj:pylearn2.costs.mlp.WeightDecay {
-                    coeffs: [ .0001, .0001, .0001, 
-                        .0001, 
-#                        .0001, 
-                    ]
+                    coeffs: [ .0001, .0001, .0001, ]
                 }
             ]
         },
@@ -120,15 +76,5 @@
              channel_name: 'valid_y_nll',
              save_path: '%(output_path)s',
         },
-        !obj:pylearn2.training_algorithms.sgd.MonitorBasedLRAdjuster {
-             channel_name: 'train_objective',
-             grow_amt: 1.1,
-             shrink_amt: 0.9
-        },
-        !obj:kbcomplete.models.attractor.ScalerAdjustor {
-            final_scaler: 0.01, 
-            start: 10, 
-            saturate: 50,
-        }
     ],
 }
